@@ -102,7 +102,7 @@ namespace PracticaconAri.Controllers
         }
 
         //put
-        [HttpPut("{id.guid}")]
+        [HttpPut("{id:guid}")]
         public ActionResult<Movie> Update(Guid id, [FromBody] UpdateMovieDto dto)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -126,7 +126,7 @@ namespace PracticaconAri.Controllers
         }
 
         //delete
-        [HttpDelete("{id.guid}")]
+        [HttpDelete("{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             var removed = _movies.RemoveAll(a => a.Id == id);
