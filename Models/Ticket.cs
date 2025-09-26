@@ -12,3 +12,15 @@ public class Ticket
     [Required, Range(0, 100)]
     public float Price { get; set; }
 }
+
+public record CreateTicketDto
+{
+    public Guid MovieId { get; init; }
+
+    [Required, StringLength(50)]
+    public string BuyerName { get; init; } = string.Empty;
+    public DateTime PurchaseDate { get; init; }
+
+    [Required, Range(0, 100)]
+    public float Price { get; init; }
+}
