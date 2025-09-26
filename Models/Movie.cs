@@ -8,7 +8,7 @@ public class Movie
     public Guid Id { get; set; }
 
     [Required]
-    public string title { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
     [Required]
     public string Genre { get; set; } = string.Empty;
@@ -24,13 +24,13 @@ public class Movie
 }
 
 //Dtos
-public record CreateMovie
+public record CreateMovieDto
 {
     [Required]
-    public string title { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
 
     [Required]
-    public string genre { get; init; } = string.Empty;
+    public string Genre { get; init; } = string.Empty;
 
     [Required]
     public DateTime ReleaseDate { get; init; }
@@ -42,13 +42,13 @@ public record CreateMovie
     public bool Available { get; init; }
 }
 
-public record UpdateMovie
+public record UpdateMovieDto
 {
     [Required]
-    public string title { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
 
     [Required]
-    public string genre { get; init; } = string.Empty;
+    public string Genre { get; init; } = string.Empty;
 
     [Required]
     public DateTime ReleaseDate { get; init; }
