@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticAssets;
-using System.Collections;
 using System.Reflection;
 
 namespace PracticaconAri.Controllers
@@ -66,6 +64,41 @@ namespace PracticaconAri.Controllers
                 data,
                 meta = new { page = p, limit = l, total }
             });
+
+
+       
+
+        }
+
+        //get  by id
+        [HttpGet("{id:guid}")]
+        public ActionResult<Movie> GetOne(Guid id)
+        {
+            var movie = _movies.FirstOrDefault(x => x.Id == id);
+            return movie is null
+                ? NotFound(new { error = "Movie not found", status = 404 })
+                : Ok(movie);
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult<Movie> Create([FromBody] CreateMovieDto dto)
+        {
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
+
+            var movie = new Movie
+            {
+                Id = Guid.NewGuid(),
+                Title = dto.Title.Trim(),
+                Genre = dto.Genre.Trim(),
+                ReleaseDate= dto.ReleaseDate,
+                DurationMinutes = dto.DurationMinutes,
+                Available = dto.Available
+            };
+
+            _movies.Add(movie);
+            return CreatedAtAction(nameof(GetOne), new { id = movie.Id }, movie);
+
         }
     }
 }
