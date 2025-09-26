@@ -1,0 +1,15 @@
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+bin/
+obj/
+*.pdb
+*.dbmdl
+*.jfm
+*.aps
+*.ncb
+*.opendb
+*.VC.db
+*.vscode/
