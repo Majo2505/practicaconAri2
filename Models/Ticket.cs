@@ -24,3 +24,14 @@ public record CreateTicketDto
     [Required, Range(0, 100)]
     public float Price { get; init; }
 }
+public record UpdateTicketDto
+{
+    public Guid MovieId { get; init; }
+
+    [Required, StringLength(50)]
+    public string BuyerName { get; init; } = string.Empty;
+    public DateTime PurchaseDate { get; init; }
+
+    [Required, Range(0, 100)]
+    public float Price { get; init; }
+}
