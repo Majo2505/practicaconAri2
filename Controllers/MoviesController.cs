@@ -100,5 +100,38 @@ namespace PracticaconAri.Controllers
             return CreatedAtAction(nameof(GetOne), new { id = movie.Id }, movie);
 
         }
+
+        //put
+        [HttpPut("{id.guid}")]
+        public ActionResult<Movie> Update(Guid id, [FromBody] UpdateMovieDto dto)
+        {
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
+
+            var index=_movies.FindIndex(a=>a.Id==id);
+            if (index == -1)
+                return NotFound(new { error = "Movie not found", StatusCode = 404 });
+
+            var updated = new Movie
+            {
+                Id = id,
+                Title = dto.Title.Trim(),
+                Genre = dto.Genre.Trim(),
+                ReleaseDate = dto.ReleaseDate,
+                DurationMinutes = dto.DurationMinutes,
+                Available = dto.Available
+            };
+
+            _movies[index] = updated;
+            return Ok(updated);
+        }
+
+        //delete
+        [HttpDelete("{id.guid}")]
+        public IActionResult Delete(Guid id)
+        {
+            var removed = _movies.RemoveAll(a => a.Id == id);
+            return removed == 0 ? NotFound(new { error = "Movie not found", status = 404 }) : NoContent();
+        }
     }
+
 }
