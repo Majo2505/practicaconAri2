@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticAssets;
+using System.Collections;
 using System.Reflection;
 
 namespace PracticaconAri.Controllers
@@ -36,6 +37,35 @@ namespace PracticaconAri.Controllers
             return string.Equals(order, "desc", StringComparison.OrdinalIgnoreCase)
                 ? src.OrderByDescending(x => prop.GetValue(x))
                 : src.OrderBy(x => prop.GetValue(x));
+        }
+
+        //LIST GET movies
+        [HttpGet]
+        public IActionResult GetAll(
+            [FromQuery] int? page,
+            [FromQuery] int?limit,
+            [FromQuery] string?sort,
+            [FromQuery] string? order,
+            [FromQuery] string? q
+        )
+
+        {
+            var (p, l) = NormalizePage(page, limit);
+
+            IEnumerable<Movie> query = _movies;
+
+            //ordenamiento
+            query=OrderByProp(query, sort, order);
+
+            //paginacion
+            var total = query.Count();
+            var data = query.Skip((p - 1) * l).Take(l).ToList();
+
+            return Ok(new
+            {
+                data,
+                meta = new { page = p, limit = l, total }
+            });
         }
     }
 }
