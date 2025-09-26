@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 public class Ticket
 {
-    public Guid id { get; set; }
+    public Guid Id { get; set; }
     public Guid MovieId { get; set; }
 
     [Required, StringLength(50)]
